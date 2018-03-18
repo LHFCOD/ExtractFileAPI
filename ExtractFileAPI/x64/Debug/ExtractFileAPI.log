@@ -1,0 +1,25 @@
+﻿  interface.cpp
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(10): warning C4005: 'INTERFACE': macro redefinition
+  c:\program files (x86)\windows kits\8.1\include\um\commdlg.h(954): note: see previous definition of 'INTERFACE'
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.cpp(281): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  ComDocIO.cpp
+  Generating Code...
+  CSharp.cpp
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(12): warning C4005: 'INTERFACE': macro redefinition
+  c:\program files (x86)\windows kits\8.1\include\um\commdlg.h(954): note: see previous definition of 'INTERFACE'
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.cpp(8): warning C4273: 'CreateMDSFile': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.h(4): note: see previous definition of 'CreateMDSFile'
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.cpp(12): warning C4273: 'ReleaseMDSFile': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.h(5): note: see previous definition of 'ReleaseMDSFile'
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.cpp(20): warning C4273: 'GetTileData': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.h(6): note: see previous definition of 'GetTileData'
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.cpp(34): warning C4273: 'GetTileSize': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.h(7): note: see previous definition of 'GetTileSize'
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.cpp(48): warning C4273: 'TestDll': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.h(8): note: see previous definition of 'TestDll'
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.cpp(46): warning C4715: 'GetTileSize': not all control paths return a value
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\csharp.cpp(32): warning C4715: 'GetTileData': not all control paths return a value
+     Creating library C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Debug\ExtractFiled.lib and object C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Debug\ExtractFiled.exp
+  ExtractFileAPI.vcxproj -> C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Debug\ExtractFiled.dll
+  ExtractFileAPI.vcxproj -> C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Debug\ExtractFiled.pdb (Full PDB)

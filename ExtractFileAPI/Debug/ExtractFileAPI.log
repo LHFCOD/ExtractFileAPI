@@ -1,0 +1,2 @@
+﻿  ComDocIO.cpp
+d:\qt\5.8\msvc2015_64\include\qtcore\qtcore(3): fatal error C1083: Cannot open include file: 'QtCore/QtCoreDepends': No such file or directory
