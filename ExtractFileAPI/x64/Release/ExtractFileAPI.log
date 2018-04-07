@@ -1,14 +1,28 @@
-﻿  CSharp.cpp
-c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(10): warning C4005: 'INTERFACE': macro redefinition
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\commdlg.h(954): note: see previous definition of 'INTERFACE'
+﻿  ComDocIO.cpp
+ComDocIO.cpp(249): warning C4018: '<': signed/unsigned mismatch
   interface.cpp
-c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(12): warning C4005: 'INTERFACE': macro redefinition
-  C:\Program Files (x86)\Windows Kits\8.1\Include\um\commdlg.h(954): note: see previous definition of 'INTERFACE'
-interface.cpp(281): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+interface.cpp(13): warning C4273: 'TileImage::MDSFile::MDSFile': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(52): note: see previous definition of '{ctor}'
+interface.cpp(22): warning C4273: 'TileImage::MDSFile::GetImageInfo': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(53): note: see previous definition of 'GetImageInfo'
+interface.cpp(64): warning C4273: 'TileImage::MDSFile::GetLayerProperty': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(54): note: see previous definition of 'GetLayerProperty'
+interface.cpp(118): warning C4273: 'TileImage::MDSFile::GetTileData': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(55): note: see previous definition of 'GetTileData'
+interface.cpp(121): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-     Creating library C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Release\ExtractFile.lib and object C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Release\ExtractFile.exp
+interface.cpp(129): warning C4273: 'TileImage::MDSFile::GetTileVirtualData': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(56): note: see previous definition of 'GetTileVirtualData'
+interface.cpp(215): warning C4273: 'TileImage::MDSFile::GetMinLevelImage': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(57): note: see previous definition of 'GetMinLevelImage'
+interface.cpp(229): warning C4273: 'TileImage::MDSFile::~MDSFile': inconsistent dll linkage
+  c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(58): note: see previous definition of '{dtor}'
+  MicroComDocIO.cpp
+  CSharp.cpp
+     Creating library C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_ExtractFileAPI.lib and object C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_ExtractFileAPI.exp
   Generating code
-  All 174 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\comdocio.h(119): warning C4715: 'ComDoc::ComDocIO::Comparestring': not all control paths return a value
+  All 280 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
-  ExtractFileAPI.vcxproj -> C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Release\ExtractFile.dll
-  ExtractFileAPI.vcxproj -> C:\Users\NCEPU\documents\visual studio 2015\Projects\ExtractFileAPI\x64\Release\ExtractFile.pdb (Full PDB)
+  ExtractFileAPI.vcxproj -> C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_ExtractFileAPI.dll
+  ExtractFileAPI.vcxproj -> C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_ExtractFileAPI.pdb (Full PDB)

@@ -1,0 +1,15 @@
+﻿  interface.cpp
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(13): warning C4005: 'INTERFACE': macro redefinition
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\commdlg.h(954): note: see previous definition of 'INTERFACE'
+..\ExtractFileAPI\interface.cpp(203): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+  JavaApi.cpp
+c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(13): warning C4005: 'INTERFACE': macro redefinition
+  C:\Program Files (x86)\Windows Kits\8.1\Include\um\commdlg.h(954): note: see previous definition of 'INTERFACE'
+  MicroComDocIO.cpp
+     Creating library C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_JavaDll.lib and object C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_JavaDll.exp
+  Generating code
+  All 184 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  JavaDll.vcxproj -> C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_JavaDll.dll
+  JavaDll.vcxproj -> C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Release\Release_x64_JavaDll.pdb (Full PDB)

@@ -1,5 +1,6 @@
 #include "../JAVA/JavaApi.h"
 #include "interface.h"
+using namespace TileImage;
 /*
 * Class:     ExtractFile
 * Method:    CreateMDSFile

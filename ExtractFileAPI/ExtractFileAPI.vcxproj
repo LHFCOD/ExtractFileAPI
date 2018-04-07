@@ -73,19 +73,21 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\Qt\5.8\msvc2015_64\include\QtCore;$(IncludePath)</IncludePath>
+    <TargetName>$(Configuration)_$(Platform)_$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>D:\JDK\include\win32;D:\JDK\include;D:\Qt\5.8\msvc2015_64\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Qt\5.8\msvc2015_64\lib;$(LibraryPath)</LibraryPath>
-    <TargetName>ExtractFiled</TargetName>
+    <TargetName>$(Configuration)_$(Platform)_$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(Configuration)_$(Platform)_$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>ExtractFile</TargetName>
+    <TargetName>$(Configuration)_$(Platform)_$(ProjectName)</TargetName>
     <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
     <IncludePath>D:\Qt\5.8\msvc2015_64\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Qt\5.8\msvc2015_64\lib;$(LibraryPath)</LibraryPath>
@@ -154,15 +156,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ComDocIO.cpp" />
     <ClCompile Include="CSharp.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="interface.cpp" />
+    <ClCompile Include="MicroComDocIO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseDataStruct.h" />
+    <ClInclude Include="ComDocIO.h" />
     <ClInclude Include="CSharp.h" />
     <ClInclude Include="interface.h" />
+    <ClInclude Include="MicroComDocIO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

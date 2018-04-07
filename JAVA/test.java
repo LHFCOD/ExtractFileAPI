@@ -18,25 +18,17 @@ public class test {
   public int TileHeight;
 
   public static void main(String[] args) {
-    test newClass=new test("2.mds");
+    test newClass=new test("E:\\web\\NEW\\1.mds");
     System.out.println("maxLevel:"+newClass.maxLevel);
     System.out.println("ImageWidth:"+newClass.ImageWidth);
     System.out.println("ImageHeight:"+newClass.ImageHeight);
     System.out.println("TileWidth:"+newClass.TileWidth);
     System.out.println("TileHeight:"+newClass.TileHeight);
-
+byte[] data=newClass.GetTileData(12,1,5);
     //ªÒ»°Õﬂ∆¨
-	for(int x=0;x<10;x++)
-for(int y=0;y<10;y++)
+	for(int i=0;i<20;i++)
 {
-byte[] data=newClass.GetTileData(12,x,y);
-System.out.println("x:"+x+",y:"+y);
-System.out.println("ptrMDS:"+newClass.ptrMDS);
-for(int i=0;i<5;i++)
-{
-System.out.print((char)data[i]);
-}
-System.out.println("");
+System.out.println(data[i]);
 }
     
     newClass.ReleaseMDSFile();

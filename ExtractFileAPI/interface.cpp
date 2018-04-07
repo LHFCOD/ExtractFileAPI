@@ -7,180 +7,20 @@
 #include <cmath>
 #include <stdio.h>
 
-FileBlock::FileBlock(byte_t *_p, int _len)
-{
-	p = _p;
-	len = _len;
-}
-FileBlock::~FileBlock()
-{
-	if (p != nullptr)
-	{
-		free(p);
-		p = nullptr;
-	}
-}
-MDSFile::MDSFile(QString RootDir)
-{
-	//io = new ComDocIO(RootDir);
-	::OleInitialize(NULL);
-	wchar_t wpath[100] = { 0 };
-	RootDir.toWCharArray(wpath);
-	HRESULT hr = StgOpenStorage(wpath, NULL, STGM_READ |STGM_SHARE_DENY_WRITE, NULL, 0, &rootSt);
-	if (FAILED(hr))
-	{
-		throw std::exception("Read MDS file error!");
-	}
+using namespace TileImage;
 
+TileImage::MDSFile::MDSFile(QString RootDir)
+{
+	io = new ComDocIO(RootDir);
 	GetImageInfo();
 	GetLayerProperty();
 	GetMinLevelImage();
-	
 }
-//FileBlock* MDSFile::ReadFromPath(QString path)
-//{
-//	QStringList dirList = path.split("\\");
-//	//对路径合法性进行检查
-//	for (int i = 0; i < dirList.count(); i++)
-//	{
-//		if (i == 0)
-//		{
-//			if (!dirList[i].isEmpty())
-//				throw std::exception("path has error!");
-//		}
-//		else
-//		{
-//			if (dirList[i].isEmpty())
-//				throw std::exception("path has error!");
-//		}
-//	}
-//	i32_t currentDID = 0;
-//	for (int i = 1; i < dirList.count(); i++)
-//	{
-//		bool isExist = false;
-//		if (i < dirList.count() - 1)
-//		{
-//			QVector<Directory> *vec = io->FilePool[currentDID];
-//			for each(Directory direct in *vec)
-//			{
-//				QString name = QString::fromUtf16((char16_t*)(direct.EntryName));
-//				if (dirList[i] == name)
-//				{
-//
-//					//如果对应的为目录
-//					if (direct.EntryType == 1)
-//					{
-//						currentDID = direct.DID;
-//						isExist = true;
-//					}
-//					else
-//					{
-//						throw std::exception("path has error!");
-//
-//					}
-//
-//				}
-//			}
-//			if (isExist == false)
-//			{
-//				throw std::exception("path has error!");
-//			}
-//		}
-//		else
-//		{
-//			QVector<Directory> *vec = io->FilePool[currentDID];
-//			for each(Directory direct in *vec)
-//			{
-//				QString name = QString::fromUtf16((char16_t*)(direct.EntryName));
-//				if (dirList[i] == name)
-//				{
-//					isExist = true;
-//					//
-//					if (direct.EntryType == 1)
-//					{
-//						throw std::exception("path has error!");
-//					}
-//					else
-//					{
-//						isExist = true;
-//						byte_t *p;
-//						if (direct.StreamSize < io->m_Header.MiniSize)
-//							p = io->ReadShortStreamFromSID(direct.SID, direct.StreamSize);
-//						else
-//							p = io->ReadStreamFromSID(direct.SID, direct.StreamSize);//一次性把所需要写的字符流读取，然后写入文件
-//						FileBlock *content = new FileBlock(p, direct.StreamSize);
-//						return content;
-//					}
-//				}
-//			}
-//			if (isExist == false)
-//			{
-//				throw std::exception("path has error!");
-//			}
-//		}
-//	}
-//}
-FileBlock* MDSFile::ReadFromPath(QString path)
-{
-	QStringList dirList = path.split("\\");
-	//对路径合法性进行检查
-	for (int i = 0; i < dirList.count(); i++)
-	{
-		if (i == 0)
-		{
-			if (!dirList[i].isEmpty())
-				throw std::exception("path has error!");
-		}
-		else
-		{
-			if (dirList[i].isEmpty())
-				throw std::exception("path has error!");
-		}
-	}
-	IStorage *parentSt = rootSt;
-	std::vector<IStorage*> StVec;
-	for (int i = 1; i < dirList.count() - 1; i++)
-	{
-		IStorage *childSt;
-		//将目录名字转化为宽字符
-		wchar_t wpath[100] = { 0 };
-		dirList[i].toWCharArray(wpath);
-		HRESULT hr = parentSt->OpenStorage(wpath, NULL, STGM_READ |STGM_SHARE_EXCLUSIVE, NULL, 0, &childSt);
-		if (FAILED(hr))
-		{
-			throw std::exception("Read MDS file error!");
-		}
-		parentSt = childSt;
-		//添加Storage到父母录链中
-		StVec.insert(StVec.end(),parentSt);
-	}
-	wchar_t wpath[100] = { 0 };
-	dirList.last().toWCharArray(wpath);
-	IStream* pStream;
-	HRESULT hr = parentSt->OpenStream(wpath, 0, STGM_READ | STGM_SHARE_EXCLUSIVE, 0, &pStream);
-	if (FAILED(hr))
-	{
-		throw std::exception("Read MDS file error!");
-	}
-	//获取流信息
-	STATSTG stg;
-	pStream->Stat(&stg, NULL);
-	char* content = (char*)malloc(stg.cbSize.QuadPart);
-	unsigned long readEd = 0;
-	pStream->Read(content, stg.cbSize.QuadPart, &readEd);
-	//把流释放掉
-	pStream->Release();
-	//把父目录释放掉
-	for each(IStorage *st in StVec)
-	{
-		if(st!=nullptr)
-		st->Release();
-	}
-	return new FileBlock((byte_t*)content, stg.cbSize.QuadPart);
-}
+
+
 void MDSFile::GetImageInfo()
 {
-	FileBlock *content = ReadFromPath(u8"\\DSI0\\MoticDigitalSlideImage");
+	FileBlock *content = io->ReadFromPath(u8"\\DSI0\\MoticDigitalSlideImage");
 	QByteArray xmlArray = QByteArray::fromRawData((char*)content->p, content->len);
 	QDomDocument doc;
 	if (!doc.setContent(xmlArray))
@@ -222,7 +62,7 @@ void MDSFile::GetImageInfo()
 }
 void MDSFile::GetLayerProperty()
 {
-	FileBlock *content = ReadFromPath(u8"\\DSI0\\MoticDigitalSlideImage");
+	FileBlock *content = io->ReadFromPath(u8"\\DSI0\\MoticDigitalSlideImage");
 	QByteArray xmlArray = QByteArray::fromRawData((char*)content->p, content->len);
 	QDomDocument doc;
 	if (!doc.setContent(xmlArray))
@@ -282,7 +122,7 @@ FileBlock* MDSFile::GetTileData(int Level, int x, int y)
 	QString Path("\\DSI0\\");
 
 	Path = Path + folderName + "\\" + QString(FileName);
-	FileBlock *imge = ReadFromPath(Path);
+	FileBlock *imge = io->ReadFromPath(Path);
 	return imge;
 }
 FileBlock* MDSFile::GetTileVirtualData(int Level, int x, int y)
@@ -321,13 +161,14 @@ FileBlock* MDSFile::GetTileVirtualData(int Level, int x, int y)
 		QImage image;
 		image.loadFromData(temp_block->p, temp_block->len);
 		QImage lastImage = image.copy(0, 0,vWidth , vHeight);
-		delete temp_block;
+		
 		QByteArray ba;
 		QBuffer buffer(&ba);
 		buffer.open(QIODevice::WriteOnly);
 		lastImage.save(&buffer, "JPEG"); // writes image into ba in PNG format
 		byte_t *p = (byte_t*)malloc(ba.count());
 		memcpy(p, ba.data(), ba.count());
+		delete temp_block;
 		return new FileBlock(p, ba.count());
 	}
 	else
@@ -386,17 +227,12 @@ void MDSFile::GetMinLevelImage()
 }
 MDSFile::~MDSFile()
 {
-	/*if (io != nullptr)
+	if (io != nullptr)
 	{
 		delete io;
 		io = nullptr;
-	}*/
-	if (rootSt != nullptr)
-	{
-		rootSt->Release();
-		rootSt = nullptr;
 	}
-	::OleUninitialize();
+	
 	if (minLevelImage != nullptr)
 	{
 		delete minLevelImage;

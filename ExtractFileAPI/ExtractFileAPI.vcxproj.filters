@@ -21,6 +21,12 @@
     <ClCompile Include="CSharp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MicroComDocIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComDocIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="interface.h">
@@ -28,6 +34,15 @@
     </ClInclude>
     <ClInclude Include="CSharp.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MicroComDocIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComDocIO.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

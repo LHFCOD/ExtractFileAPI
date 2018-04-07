@@ -1,5 +1,5 @@
 #include "ComDocIO.h"
-
+using namespace ComDoc;
 
 
 ComDocIO::ComDocIO()
@@ -13,39 +13,156 @@ ComDocIO::ComDocIO(QString FilePath)
 	ConfigureSAT();
 	ConfigureShorStream();//配置短流信息
 
-	Directory direct;
-	for (int i = 0; i < 1000; i++)
+	//Directory direct;
+	//for (int i = 0; i < 1000; i++)
+	//{
+	//	direct = ReadDirectory(i);
+	//	if (direct.EntryType == 2 && direct.StreamSize < m_Header.MiniSize)
+	//		break;
+	//}
+	//
+	//byte_t *p;
+	//if (direct.EntryType == 2)
+	//{
+	//	if (direct.StreamSize < m_Header.MiniSize)
+	//		p = ReadShortStreamFromSID(direct.SID, direct.StreamSize);
+	//	else
+	//		p = ReadStreamFromSID(direct.SID, direct.StreamSize);//一次性把所需要写的字符流读取，然后写入文件
+	//}
+	//else
+	//{
+	//	//不为流
+	//	return;
+	//}
+
+	//
+	//QString str = QString::fromUtf16((ushort*)(direct.EntryName), direct.NameSize / 2);//文件名字
+	//QByteArray arr = str.toLocal8Bit();//这个地方不太明白，为啥要分开去写比较合适
+	//char *tmp = arr.data();
+	//
+
+	//QVector<Directory> *vec = new QVector<Directory>();
+	//CreateFilePool(0, vec);
+}
+FileBlock * ComDocIO::ReadFromPath(QString path)
+{
+	QStringList dirList = path.split("\\");
+	//对路径合法性进行检查
+	for (int i = 0; i < dirList.count(); i++)
 	{
-		direct = ReadDirectory(i);
-		if (direct.EntryType == 2 && direct.StreamSize < m_Header.MiniSize)
-			break;
-	}
-	
-	byte_t *p;
-	if (direct.EntryType == 2)
-	{
-		if (direct.StreamSize < m_Header.MiniSize)
-			p = ReadShortStreamFromSID(direct.SID, direct.StreamSize);
+		if (i == 0)
+		{
+			if (!dirList[i].isEmpty())
+			{
+				std::logic_error excep("path has error!");
+				throw std::exception(excep);
+			}
+		}
 		else
-			p = ReadStreamFromSID(direct.SID, direct.StreamSize);//一次性把所需要写的字符流读取，然后写入文件
+		{
+			if (dirList[i].isEmpty())
+			{
+				std::logic_error excep("path has error!");
+				throw std::exception(excep);
+			}
+		}
+	}
+	Directory lastRoot = ReadDirectory(0);
+
+	for (int i = 1; i < dirList.count(); i++)
+	{
+#ifdef _WIN32
+		lastRoot = FindDirectoryFromWName(lastRoot.RootDID, dirList[i].toStdWString());
+#else
+		lastRoot = FindDirectoryFromName(lastRoot.RootDID, dirList[i].toStdString());
+#endif
+		//如果找不到指定目录
+		if (lastRoot.NameSize == 0)
+		{
+			std::logic_error excep("can't find the specified directory!");
+			throw std::exception(excep);
+		}
+	}
+	byte_t *p;
+	if (lastRoot.StreamSize < m_Header.MiniSize)
+		p = ReadShortStreamFromSID(lastRoot.SID, lastRoot.StreamSize);
+	else
+		p = ReadStreamFromSID(lastRoot.SID, lastRoot.StreamSize);//一次性把所需要写的字符流读取，然后写入文件
+	FileBlock *block = new FileBlock(p, lastRoot.StreamSize);
+	return block;
+}
+Directory ComDoc::ComDocIO::FindDirectoryFromWName(i32_t RootDID, std::wstring name)
+{
+
+	//入口名宽字符转单字符
+	/*char sCharName[20] = { 0 };
+	mbstate_t state = mbstate_t();
+	wchar_t* mCharName = (wchar_t*)direct.EntryName;
+	size_t countBytes = std::wcsrtombs(nullptr, (const wchar_t**)&mCharName, 0, &state);*/
+	Directory direct = ReadDirectory(RootDID);
+
+	std::wstring entry((wchar_t*)direct.EntryName);
+	int comp = CompareWstring(name, entry);
+	if (comp == 0)
+		return direct;
+	else if (comp == -1)
+	{
+		if (direct.LeftDID < 0)
+			return Directory();
+		else
+		{
+			Directory dir = FindDirectoryFromWName(direct.LeftDID, name);
+			return dir;
+		}
 	}
 	else
 	{
-		//不为流
-		return;
+		if (direct.RightDID < 0)
+			return Directory();
+		else
+		{
+			Directory dir = FindDirectoryFromWName(direct.RightDID, name);
+			return dir;
+		}
 	}
 
-	
-	QString str = QString::fromUtf16((ushort*)(direct.EntryName), direct.NameSize / 2);//文件名字
-	QByteArray arr = str.toLocal8Bit();//这个地方不太明白，为啥要分开去写比较合适
-	char *tmp = arr.data();
-	
-
-	QVector<Directory> *vec = new QVector<Directory>();
-	CreateFilePool(0, vec);
 }
-
-
+Directory ComDoc::ComDocIO::FindDirectoryFromName(i32_t RootDID, std::string name)
+{
+	Directory direct = ReadDirectory(RootDID);
+	
+	std::string entry;
+	for (int i = 0; i < direct.NameSize; i++)
+	{
+		if (i % 2 == 0 && direct.EntryName[i]!='\0')
+		{
+			entry.insert(entry.end(), direct.EntryName[i]);
+		}
+	}
+	int comp = Comparestring(name, entry);
+	if (comp == 0)
+		return direct;
+	else if (comp == -1)
+	{
+		if (direct.LeftDID < 0)
+			return Directory();
+		else
+		{
+			Directory dir = FindDirectoryFromName(direct.LeftDID, name);
+			return dir;
+		}
+	}
+	else
+	{
+		if (direct.RightDID < 0)
+			return Directory();
+		else
+		{
+			Directory dir = FindDirectoryFromName(direct.RightDID, name);
+			return dir;
+		}
+	}
+}
 ComDocIO::~ComDocIO()
 {
 	if (dat)
@@ -54,10 +171,10 @@ ComDocIO::~ComDocIO()
 		file.unmap(dat);
 	}
 	file.close();
-	for each(QVector<Directory> *vec in FilePool)
+	for(auto *vec : FilePool)
 	{
-		if(vec)
-		delete vec;
+		if (vec)
+			delete vec;
 	}
 }
 
@@ -116,12 +233,27 @@ Directory ComDocIO::ReadDirectory(ui32_t DID)
 	Directory direct;
 	i32_t SeriNum = DID * 128 / m_Header.SectorSize;
 	i32_t off = DID * 128 % m_Header.SectorSize;
-	i32_t NowSID = FindSID(m_Header.DirectSID, SeriNum);
-	if (NowSID < 0)
+	//i32_t NowSID = FindSID(m_Header.DirectSID, SeriNum);
+	i32_t NowSID = 0;
+	///////
+	if (m_Header.DirectSID < 0)
 	{
+		//SID已结束
+		//NowSID= m_Header.DirectSID;
 		//获取的SID有问题
 		return Directory();
 	}
+	else
+	{
+		NowSID = m_Header.DirectSID;
+		for (ui32_t index = 0; index < SeriNum; index++)
+			NowSID = FindNextSID(NowSID);
+	}
+	//if (NowSID < 0)
+	//{
+	//	//获取的SID有问题
+	//	return Directory();
+	//}
 
 	ptr = dat + (NowSID + 1)*m_Header.SectorSize + off;//偏移到目录入口
 	memcpy(direct.EntryName, ptr, sizeof(direct.EntryName));
@@ -159,13 +291,12 @@ i32_t ComDocIO::FindNextSID(i32_t SID)
 		i32_t seri = (seriNum - 109) / SIDCount;
 		i32_t offset = (seriNum - 109) % SIDCount;
 		ptr = dat + SATAllo.at(seri) * m_Header.SectorSize + m_Header.SectorSize;
-		i32_t EntrySID= get_i32(ptr, offset * 4);
-		ptr = dat +EntrySID * m_Header.SectorSize + m_Header.SectorSize;
+		i32_t EntrySID = get_i32(ptr, offset * 4);
+		ptr = dat + EntrySID * m_Header.SectorSize + m_Header.SectorSize;
 		NextSID = get_i32(ptr, off * 4);
 	}
 	return NextSID;
 }
-
 
 
 i32_t ComDocIO::FindSID(i32_t SID, ui32_t Offset = 1)//偏移量下的扇区SID查找
@@ -300,7 +431,7 @@ void ComDocIO::CreateFilePool(ui32_t RootDID, QVector<Directory> *vec)//创建文件
 	Directory root = ReadDirectory(RootDID);
 	SerchTree(root.RootDID, vec);
 	FilePool.insert(RootDID, vec);
-	for each(Directory sub in *vec)
+	for(auto sub : *vec)
 	{
 		if (sub.EntryType == 1)
 		{
@@ -309,7 +440,7 @@ void ComDocIO::CreateFilePool(ui32_t RootDID, QVector<Directory> *vec)//创建文件
 		}
 	}
 
-	
+
 }
 void  ComDocIO::SerchTree(ui32_t RootDID, QVector<Directory> *vec)
 {
@@ -338,8 +469,8 @@ void ComDocIO::ConfigureSAT()
 
 void ComDocIO::SerchSAT(i32_t SID)
 {
-	ptr = dat +SID*m_Header.SectorSize + m_Header.SectorSize;
-	i32_t NowSID= get_i32(ptr,m_Header.SectorSize-4);
+	ptr = dat + SID*m_Header.SectorSize + m_Header.SectorSize;
+	i32_t NowSID = get_i32(ptr, m_Header.SectorSize - 4);
 	if (NowSID >= 0)
 	{
 		SATAllo.append(NowSID);
