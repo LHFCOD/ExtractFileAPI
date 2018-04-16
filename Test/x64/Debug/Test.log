@@ -1,5 +1,0 @@
-﻿  Source.cpp
-c:\users\ncepu\documents\visual studio 2015\projects\extractfileapi\extractfileapi\interface.h(15): warning C4005: 'INTERFACE': macro redefinition
-  c:\program files (x86)\windows kits\8.1\include\um\commdlg.h(954): note: see previous definition of 'INTERFACE'
-  Test.vcxproj -> C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Debug\Test.exe
-  Test.vcxproj -> C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\x64\Debug\Test.pdb (Full PDB)

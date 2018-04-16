@@ -1,6 +1,0 @@
-C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\webTest\bin\webTest.dll.config
-C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\webTest\bin\webTest.dll
-C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\webTest\bin\webTest.pdb
-C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\webTest\obj\Debug\webTest.dll
-C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\webTest\obj\Debug\webTest.pdb
-C:\Users\NCEPU\Documents\Visual Studio 2015\Projects\ExtractFileAPI\webTest\obj\Debug\webTest.csprojResolveAssemblyReference.cache
