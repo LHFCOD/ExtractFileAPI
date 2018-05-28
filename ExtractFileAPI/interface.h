@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QtCore\QtCore>
-#include <QtGui\QImage>
-#include <QtGui\QPainter>
+#include <QtCore/QtCore>
+#include <QtGui/QImage>
+#include <QtGui/QPainter>
 //#include "MicroComDocIO.h"
 //using namespace MicroComDoc;
 #include "ComDocIO.h"
@@ -40,7 +40,7 @@ namespace TileImage
 		int curImageWidth;
 		int curImageHeight;
 	};
-	class INTERFACE MDSFile
+	class MDSFile
 	{
 	public:
 		

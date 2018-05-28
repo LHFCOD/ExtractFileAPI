@@ -1,8 +1,8 @@
 
 #include "interface.h"
 #include <exception>
-#include <QtXml\QtXml>
-#include <QtXml\QDomDocument>
+#include <QtXml/QtXml>
+#include <QtXml/QDomDocument>
 
 #include <cmath>
 #include <stdio.h>
@@ -25,7 +25,7 @@ void MDSFile::GetImageInfo()
 	QDomDocument doc;
 	if (!doc.setContent(xmlArray))
 	{
-		throw std::exception("read xml file failed!");
+		throw std::logic_error("read xml file failed!");
 	}
 	QDomElement root = doc.documentElement();//读取根节点 
 	QDomElement ImageMatrix = root.elementsByTagName("ImageMatrix").at(0).toElement();
@@ -67,7 +67,7 @@ void MDSFile::GetLayerProperty()
 	QDomDocument doc;
 	if (!doc.setContent(xmlArray))
 	{
-		throw std::exception("read xml file failed!");
+		throw std::logic_error("read xml file failed!");
 	}
 	QDomElement root = doc.documentElement();//读取根节点 
 	QDomElement ImageMatrix = root.elementsByTagName("ImageMatrix").at(0).toElement();
@@ -129,7 +129,7 @@ FileBlock* MDSFile::GetTileVirtualData(int Level, int x, int y)
 {
 	if (Level > info.maxLevel || Level < 0)
 	{
-		throw std::exception("image not exist!");
+		throw std::logic_error("image not exist!");
 	}
 	if (Level >= info.minLevel)
 	{
